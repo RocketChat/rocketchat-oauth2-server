@@ -32,7 +32,7 @@ var oauth2server = new OAuth2Server({
 WebApp.rawConnectHandlers.use(oauth2server.app);
 
 // Add a route to return account information
-oauth2server.routes.get('/account', oauth2server.oauth.authorise(), function(req, res, next) {
+oauth2server.routes.get('/account', oauth2server.oauth.authorize(), function(req, res, next) {
   var user = Meteor.users.findOne(req.user.id);
 
   res.send({
@@ -55,13 +55,13 @@ FlowRouter.route('/oauth/authorize', {
 
 // Subscribe the list of already authorized clients
 // to auto accept
-Template.authorise.onCreated(function() {
+Template.authorize.onCreated(function() {
   this.subscribe('authorizedOAuth');
 });
 
 // Get the login token to pass to oauth
 // This is the best way to identify the logged user
-Template.authorise.helpers({
+Template.authorize.helpers({
   getToken: function() {
     return localStorage.getItem('Meteor.loginToken');
   }
@@ -69,7 +69,7 @@ Template.authorise.helpers({
 
 // Auto click the submit/accept button if user already
 // accepted this client
-Template.authorise.onRendered(function() {
+Template.authorize.onRendered(function() {
   var data = this.data;
   this.autorun(function(c) {
     var user = Meteor.user();
