@@ -39,10 +39,16 @@ class OAuth2Server
 
 
 	initRoutes: ->
-		@app.all '/oauth/token', @oauth.grant()
+		self = @
+		debugMiddleware = (req, res, next) ->
+			if self.config.debug is true
+				console.log '[OAuth2Server]', req.method, req.url
+			next()
+
+		@app.all '/oauth/token', debugMiddleware, @oauth.grant()
 
 
-		@app.post '/oauth/authorize', Meteor.bindEnvironment (req, res, next) ->
+		@app.post '/oauth/authorize', debugMiddleware, Meteor.bindEnvironment (req, res, next) ->
 			if not req.body.token?
 				return res.sendStatus(401).send('No token')
 
@@ -58,7 +64,7 @@ class OAuth2Server
 			next()
 
 
-		@app.post '/oauth/authorize', @oauth.authCodeGrant (req, next) ->
+		@app.post '/oauth/authorize', debugMiddleware, @oauth.authCodeGrant (req, next) ->
 			if req.body.allow is 'yes'
 				Meteor.users.update req.user.id, {$addToSet: {'oauth.athorizedClients': @clientId}}
 
