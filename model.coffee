@@ -6,17 +6,17 @@ debug = undefined
 
 @Model = class Model
 	constructor: (config={}) ->
-		config.accessTokensCollectionName ?= 'oauth-access-tokens'
-		config.refreshTokensCollectionName ?= 'oauth-refresh-tokens'
-		config.clientsCollectionName ?= 'oauth-clients'
-		config.authCodesCollectionName ?= 'oauth-auth-codes'
+		config.accessTokensCollectionName ?= 'oauth_access_tokens'
+		config.refreshTokensCollectionName ?= 'oauth_refresh_tokens'
+		config.clientsCollectionName ?= 'oauth_clients'
+		config.authCodesCollectionName ?= 'oauth_auth_codes'
 
 		@debug = debug = config.debug
 
-		@AccessTokens = AccessTokens = new Meteor.Collection config.accessTokensCollectionName
-		@RefreshTokens = RefreshTokens = new Meteor.Collection config.refreshTokensCollectionName
-		@Clients = Clients = new Meteor.Collection config.clientsCollectionName
-		@AuthCodes = AuthCodes = new Meteor.Collection config.authCodesCollectionName
+		@AccessTokens = AccessTokens = config.accessTokensCollection or new Meteor.Collection config.accessTokensCollectionName
+		@RefreshTokens = RefreshTokens = config.refreshTokensCollection or new Meteor.Collection config.refreshTokensCollectionName
+		@Clients = Clients = config.clientsCollection or new Meteor.Collection config.clientsCollectionName
+		@AuthCodes = AuthCodes = config.authCodesCollection or new Meteor.Collection config.authCodesCollectionName
 
 
 	getAccessToken: Meteor.bindEnvironment (bearerToken, callback) ->
