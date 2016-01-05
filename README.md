@@ -20,10 +20,15 @@ meteor add rocketchat:oauth2-server
 var oauth2server = new OAuth2Server({
   // You can change the collection names, the values
   // below are the default values.
-  accessTokensCollectionName: 'oauth-access-tokens',
-  refreshTokensCollectionName: 'oauth-refresh-tokens',
-  clientsCollectionName: 'oauth-clients',
-  authCodesCollectionName: 'oauth-auth-codes',
+  accessTokensCollectionName: 'oauth_access_tokens',
+  refreshTokensCollectionName: 'oauth_refresh_tokens',
+  clientsCollectionName: 'oauth_clients',
+  authCodesCollectionName: 'oauth_auth_codes',
+  // You can pass the collection object too
+  // accessTokensCollection: new Meteor.Collection('custom_oauth_access_tokens'),
+  // refreshTokensCollection: new Meteor.Collection('custom_oauth_refresh_tokens'),
+  // clientsCollection: new Meteor.Collection('custom_oauth_clients'),
+  // authCodesCollection: new Meteor.Collection('custom_oauth_auth_codes'),
   // You can enable some logs too
   debug: true
 });
