@@ -72,4 +72,4 @@ class OAuth2Server
 
 		@app.use @routes
 
-		@app.use @oauth.errorHandler()
+		@app.all '/oauth/*', @oauth.errorHandler()
