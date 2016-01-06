@@ -1,6 +1,6 @@
 Package.describe({
 	name: 'rocketchat:oauth2-server',
-	version: '1.1.0',
+	version: '1.1.1',
 	summary: 'OAuth 2 Server package',
 	git: ''
 });
