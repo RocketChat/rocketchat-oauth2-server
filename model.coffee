@@ -36,9 +36,9 @@ debug = undefined
 
 		try
 			if not clientSecret?
-				client = Clients.findOne { clientId: clientId }
+				client = Clients.findOne { active: true, clientId: clientId }
 			else
-				client = Clients.findOne { clientId: clientId, clientSecret: clientSecret }
+				client = Clients.findOne { active: true, clientId: clientId, clientSecret: clientSecret }
 			callback null, client
 		catch e
 			callback e
