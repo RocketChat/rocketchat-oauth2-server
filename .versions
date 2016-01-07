@@ -7,9 +7,9 @@ coffeescript@1.0.11
 ecmascript@0.1.6
 ecmascript-runtime@0.2.6
 ejson@1.0.7
-local-test:rocketchat:oauth2-server@1.1.1
+local-test:rocketchat:oauth2-server@1.2.0
 meteor@1.1.10
 promise@0.5.1
 random@1.0.5
-rocketchat:oauth2-server@1.1.1
+rocketchat:oauth2-server@1.2.0
 underscore@1.0.4
