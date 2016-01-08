@@ -12,3 +12,6 @@
 
 # 1.2.0 - 2016/01/07
 * Return only clients with `active: true`
+
+# 1.3.0 - 2016/01/08
+* Redirect user to `/oauth/404` if client does not exists or is inactive
