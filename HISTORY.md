@@ -15,3 +15,7 @@
 
 # 1.3.0 - 2016/01/08
 * Redirect user to `/oauth/404` if client does not exists or is inactive
+
+# 1.4.0 - 2016/01/08
+* Redirect user to `/oauth/error/404` instead of `/oauth/404`
+* Redirect user to `/oauth/error/invalid_redirect_uri` if uri does not match
