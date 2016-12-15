@@ -52,7 +52,7 @@ class OAuth2Server
 				if self.config.debug is true
 					console.log '[OAuth2Server]', 'Transforming a request to form-urlencoded with the query going to the body.'
 				req.headers['content-type'] = 'application/x-www-form-urlencoded'
-				req.body = req.query
+				req.body = Object.assign {}, req.body, req.query
 			next()
 
 		@app.all '/oauth/token', debugMiddleware, transformRequestsNotUsingFormUrlencodedType, @oauth.grant()
