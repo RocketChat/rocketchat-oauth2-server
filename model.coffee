@@ -48,7 +48,7 @@ debug = undefined
 		if debug is true
 			console.log '[OAuth2Server]', 'in grantTypeAllowed (clientId:', clientId, ', grantType:', grantType + ')'
 
-		return callback(false, grantType in ['authorization_code'])
+		return callback(false, grantType in ['authorization_code', 'refresh_token'])
 
 
 	saveAccessToken: Meteor.bindEnvironment (token, clientId, expires, user, callback) ->
