@@ -45,7 +45,17 @@ class OAuth2Server
 				console.log '[OAuth2Server]', req.method, req.url
 			next()
 
-		@app.all '/oauth/token', debugMiddleware, @oauth.grant()
+		# Transforms requests which are POST and aren't "x-www-form-urlencoded" content type
+		# and they pass the required information as query strings
+		transformRequestsNotUsingFormUrlencodedType = (req, res, next) ->
+			if not req.is('application/x-www-form-urlencoded') and req.method is 'POST'
+				if self.config.debug is true
+					console.log '[OAuth2Server]', 'Transforming a request to form-urlencoded with the query going to the body.'
+				req.headers['content-type'] = 'application/x-www-form-urlencoded'
+				req.body = Object.assign {}, req.body, req.query
+			next()
+
+		@app.all '/oauth/token', debugMiddleware, transformRequestsNotUsingFormUrlencodedType, @oauth.grant()
 
 		@app.get '/oauth/authorize', debugMiddleware, Meteor.bindEnvironment (req, res, next) ->
 			client = self.model.Clients.findOne({ active: true, clientId: req.query.client_id })
