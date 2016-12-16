@@ -2,7 +2,7 @@
 
 This package is a implementation of the package [node-oauth2-server](https://github.com/thomseddon/node-oauth2-server) for Meteor.
 
-It implements the `athorization_code` and works like the Facebook's OAuth popup.
+It implements the `authorization_code` and works like the Facebook's OAuth popup.
 
 ## Install
 ```
