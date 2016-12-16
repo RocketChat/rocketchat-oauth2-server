@@ -3,6 +3,8 @@
 ## 2.0.0 - 2016/01/08
 
 - Rename all athorizedClients to authorizedClients (please update your users DB too)
+- Allow `refresh_token` as a Grant Type
+- Transform any requests to `/oauth/token` that is `POST` and isn't `application/x-www-form-urlencoded`, merging the body and the query strings. See [pull request #5](https://github.com/RocketChat/rocketchat-oauth2-server/pull/5) for more details.
 
 ## 1.4.0 - 2016/01/08
 
