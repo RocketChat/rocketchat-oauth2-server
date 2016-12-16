@@ -33,7 +33,7 @@ class OAuth2Server
 					_id: @userId
 				,
 					fields:
-						'oauth.athorizedClients': 1
+						'oauth.authorizedClients': 1
 
 				return user?
 
@@ -85,7 +85,7 @@ class OAuth2Server
 
 		@app.post '/oauth/authorize', debugMiddleware, @oauth.authCodeGrant (req, next) ->
 			if req.body.allow is 'yes'
-				Meteor.users.update req.user.id, {$addToSet: {'oauth.athorizedClients': @clientId}}
+				Meteor.users.update req.user.id, {$addToSet: {'oauth.authorizedClients': @clientId}}
 
 			next(null, req.body.allow is 'yes', req.user)
 

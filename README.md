@@ -79,7 +79,7 @@ Template.authorize.onRendered(function() {
   var data = this.data;
   this.autorun(function(c) {
     var user = Meteor.user();
-    if (user && user.oauth && user.oauth.athorizedClients && user.oauth.athorizedClients.indexOf(data.client_id()) > -1) {
+    if (user && user.oauth && user.oauth.authorizedClients && user.oauth.authorizedClients.indexOf(data.client_id()) > -1) {
       c.stop();
       $('button').click();
     }
