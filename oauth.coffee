@@ -89,6 +89,27 @@ class OAuth2Server
 
 			next(null, req.body.allow is 'yes', req.user)
 
+		@app.get '/oauth/userinfo', debugMiddleware, Meteor.bindEnvironment (req, res, next) ->
+			if not req.headers.authorization?
+				return res.sendStatus(401).send('No token')
+
+			accessToken = req.headers.authorization.replace('Bearer ', '')
+
+			token = self.model.AccessTokens.findOne accessToken: accessToken
+
+			user = RocketChat.models.Users.findOneById(token.userId);
+
+			res.send
+				sub: user._id
+				name: user.name
+				email: user.emails[0].address
+				email_verified: user.emails[0].verified
+				department: ""
+				birthdate: ""
+				preffered_username: user.username
+				updated_at: user._updatedAt
+				picture: "#{Meteor.absoluteUrl()}avatar/#{user.username}"
+
 		@app.use @routes
 
 		@app.all '/oauth/*', @oauth.errorHandler()
