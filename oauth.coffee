@@ -64,6 +64,12 @@ class OAuth2Server
 
 			if client.redirectUri isnt req.query.redirect_uri
 				return res.redirect '/oauth/error/invalid_redirect_uri'
+			if Array.isArray(client.redirectUri)
+				if client.redirectUri.indexOf(req.query.redirect_uri) < 0
+					return res.redirect '/oauth/error/invalid_redirect_uri'
+			else
+				if client.redirectUri isnt req.query.redirect_uri
+					return res.redirect '/oauth/error/invalid_redirect_uri'
 
 			next()
 
