@@ -1,5 +1,9 @@
 # History
 
+## 2.1.0 - 2019/07/11
+
+- Support multiple `redirect_uri` #10
+
 ## 2.0.0 - 2016/01/08
 
 - Rename all athorizedClients to authorizedClients (please update your users DB too)
