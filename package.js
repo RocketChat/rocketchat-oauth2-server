@@ -1,12 +1,12 @@
 Package.describe({
 	name: 'rocketchat:oauth2-server',
-	version: '2.1.0',
+	version: '3.0.0',
 	summary: 'OAuth 2 Server package',
 	git: 'https://github.com/RocketChat/rocketchat-oauth2-server.git'
 });
 
 Package.onUse(function(api) {
-	api.versionsFrom('1.0');
+	api.versionsFrom('2.5');
 
 	api.use('coffeescript');
 
