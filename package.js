@@ -8,7 +8,7 @@ Package.describe({
 Package.onUse(function(api) {
 	api.versionsFrom('2.5');
 
-	api.use('coffeescript');
+	api.use('coffeescript@2.4.1');
 
 	api.addFiles('model.coffee', 'server');
 	api.addFiles('oauth.coffee', 'server');
