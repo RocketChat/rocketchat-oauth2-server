@@ -17,7 +17,7 @@ Package.onUse(function(api) {
 });
 
 Npm.depends({
-	"oauth2-server": "2.4.1",
+	"oauth2-server": "3.1.1",
 	"express": "4.13.3"
 });
 
