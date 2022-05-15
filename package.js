@@ -1,6 +1,6 @@
 Package.describe({
 	name: 'rocketchat:oauth2-server',
-	version: '3.0.0',
+	version: '4.0.0',
 	summary: 'OAuth 2 Server package',
 	git: 'https://github.com/RocketChat/rocketchat-oauth2-server.git'
 });
@@ -8,7 +8,7 @@ Package.describe({
 Package.onUse(function(api) {
 	api.versionsFrom('2.5');
 
-	api.use('coffeescript@2.4.1');
+	api.use('coffeescript@1.0.17');
 
 	api.addFiles('model.coffee', 'server');
 	api.addFiles('oauth.coffee', 'server');
@@ -17,7 +17,7 @@ Package.onUse(function(api) {
 });
 
 Npm.depends({
-	"oauth2-server": "2.4.1",
+	"express-oauth-server": "2.0.0",
 	"express": "4.13.3"
 });
 

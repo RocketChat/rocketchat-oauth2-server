@@ -1,23 +1,37 @@
-oauthserver = Npm.require('oauth2-server')
+oauthserver = Npm.require('express-oauth-server')
 express = Npm.require('express')
 
 # WebApp.rawConnectHandlers.use app
 # JsonRoutes.Middleware.use app
+authenticateHandlerHelper = Meteor.bindEnvironment (req, res, callback) ->
+		if not req.body.token?
+			return res.sendStatus(401).send('No token')
 
+		user = Meteor.users.findOne
+			'services.resume.loginTokens.hashedToken': Accounts._hashLoginToken req.body.token
+
+		userObj = { id: user._id }
+		callback null, userObj
 
 class OAuth2Server
-	constructor: (@config={}) ->
+	constructor: (@config = {}) ->
 		@app = express()
 
 		@routes = express()
 
-		@model = new Model(@config)
+		accessTokenLifetime = @config.accessTokenLifetime or 60 * 60 # 1 hour
+		@model = new Model(Object.assign({ accessTokenLifetime: accessTokenLifetime }, @config))
 
-		@oauth = oauthserver
+		options = 
 			model: @model
-			grants: ['authorization_code', 'refresh_token']
-			debug: @config.debug
+			accessTokenLifetime: accessTokenLifetime
+			authenticateHandler:
+				handle: (req, res, callback) ->
+					authenticateHandlerHelper(req, res, callback)
 
+		@oauth = new oauthserver(options)
+		# To support /userinfo implementation code at the time of writing this code.
+		@oauth.model = @model
 		@publishAuhorizedClients()
 		@initRoutes()
 
@@ -55,7 +69,7 @@ class OAuth2Server
 				req.body = Object.assign {}, req.body, req.query
 			next()
 
-		@app.all '/oauth/token', debugMiddleware, transformRequestsNotUsingFormUrlencodedType, @oauth.grant()
+		@app.all '/oauth/token', debugMiddleware, transformRequestsNotUsingFormUrlencodedType, Meteor.bindEnvironment @oauth.token()
 
 		@app.get '/oauth/authorize', debugMiddleware, Meteor.bindEnvironment (req, res, next) ->
 			client = self.model.Clients.findOne({ active: true, clientId: req.query.client_id })
@@ -83,12 +97,10 @@ class OAuth2Server
 			next()
 
 
-		@app.post '/oauth/authorize', debugMiddleware, @oauth.authCodeGrant (req, next) ->
+		@app.post '/oauth/authorize', debugMiddleware, Meteor.bindEnvironment @oauth.authorize(), Meteor.bindEnvironment (req, next) ->
 			if req.body.allow is 'yes'
 				Meteor.users.update req.user.id, {$addToSet: {'oauth.authorizedClients': @clientId}}
 
-			next(null, req.body.allow is 'yes', req.user)
+			# next(null, req.body.allow is 'yes', req.user)
 
 		@app.use @routes
-
-		@app.all '/oauth/*', @oauth.errorHandler()
