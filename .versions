@@ -1,4 +1,4 @@
-abhinavkrin:oauth2-server@4.0.0
+rocketchat:oauth2-server@4.0.0
 babel-compiler@7.9.0
 babel-runtime@1.5.0
 caching-compiler@1.2.2
@@ -10,7 +10,7 @@ ecmascript-runtime-client@0.12.1
 ecmascript-runtime-server@0.11.0
 fetch@0.1.1
 inter-process-messaging@0.1.1
-local-test:abhinavkrin:oauth2-server@4.0.0
+local-test:rocketchat:oauth2-server@4.0.0
 meteor@1.10.0
 modern-browsers@0.1.8
 modules@0.18.0
